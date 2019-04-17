@@ -4,19 +4,9 @@
             <el-form id='myForm' :inline="true" ref="formInline"  :model="formInline" class="demo-form-inline">
                 <el-row :gutter="20">
                     <el-col :span="8">
-                        <el-form-item label="日期">
-                            <el-date-picker
-                                    v-model="value6"
-                                    type="daterange"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期">
-                            </el-date-picker>
+                        <el-form-item>
+                            <el-button class="serch" size="medium" type="primary" @click="add">新增</el-button>
                         </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-button class="serch" size="medium" type="primary" @click="onSubmit">查询</el-button>
-                        <el-button class="serch" size="medium" type="primary" @click="add">新增</el-button>
                     </el-col>
                 </el-row>
             </el-form>
@@ -127,7 +117,7 @@
                                     :on-exceed="handleExceed"
                                     :file-list="fileList">
                                 <el-button size="small" type="primary">点击上传</el-button>
-                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                <div slot="tip" class="el-upload__tip">上传文件不超过500kb</div>
                             </el-upload>
                             <!--<input type="file" id="saveImage" name="myphoto" accept="image/png,image/gif,image/jpeg"-->
                                    <!--ref="new_image">-->
@@ -249,6 +239,7 @@
                 service.announcement(obj).then(data => {
                     if(data.data.success){
                         this.tableData = data.data.data.items;
+                        
                         this.total = data.data.data.totalNum;
                     }
                 })
@@ -272,13 +263,27 @@
                 var craete_date = year + '-' + month + '-' + day + ' ' + hour + ":" + min + ":" + sec;
                 console.log(craete_date)
                 let obj = {
-                    title:this.fileId,
+                    title:this.formDailog.title,
                     craete_date:craete_date,
                     content:this.formDailog.content,
-                    fileid:this.formDailog.fileId,
+                    fileid:this.fileId,
                 }
+                console.log(obj)
                 service.uploadAnnouncement(obj).then(data => {
                     console.log(data)
+                    if(data.data.code =='200'){
+                        this.dialogFormVisible = false;
+                        this.formDailog.title = "";
+                        this.formDailog.content = '';
+                        this.fileList = [];
+                        this.fileId = "";
+                        this.$message({
+                            showClose: true,
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                        this.onSubmit();
+                    }
                 })
             },
             //编辑

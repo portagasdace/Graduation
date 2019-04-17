@@ -81,7 +81,7 @@
                         iconClass:"iconfont icon-xitongguanli",
                         children:[
                             {label:'角色管理',name:'/roleManage'},
-                            {label:'权限管理',name:'/powerManage'},
+                            // {label:'权限管理',name:'/powerManage'},
                             {label:'文件管理',name:'/fileManage'},
                         ]
                     }
