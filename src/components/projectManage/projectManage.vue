@@ -165,8 +165,8 @@
                 for(var i in this.formInline){
                     obj[i] = this.formInline[i];
                 }
-                obj.pageNum = th;
-                obj.pageSize = 10;
+                obj.pageNum = this.currentPage;
+                obj.pageSize = this.pageSize;
                 service.subjectList(obj).then(data => {
                     if(data.data.success){
                         this.tableData = data.data.data.items;
