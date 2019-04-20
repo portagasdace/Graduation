@@ -1,6 +1,23 @@
 <template>
     <div class="proclamation">
         <div class="proclamation-main">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <el-form-item label="课题名称">
+                            <el-input size="medium" v-model="formInline.s_name" placeholder="课题名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="学生姓名">
+                            <el-input size="medium" v-model="formInline.name" placeholder="学生姓名"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-button class="serch" size="medium" type="primary" @click="getData">查询</el-button>
+                    </el-col>
+                </el-row>
+            </el-form>
             <el-table
                     :data="tableData"
                     border
@@ -44,6 +61,18 @@
                                 size="mini"
                                 type="danger"
                                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button
+                        v-if="scope.row.excellent == 0"
+                        class="tabBtn"
+                        size="mini"
+                        type="success"
+                        @click="handleState(scope.$index, scope.row)">优秀</el-button>
+                        <el-button
+                        v-else
+                        class="tabBtn"
+                        size="mini"
+                        type="ifon"
+                        @click="handleState(scope.$index, scope.row)">取消优秀</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -97,7 +126,10 @@
                 pageSize:10,
                 currentPage: 1,
                 tableData:[],
-                formInline:{}
+                formInline:{
+                    s_name:'',
+                    name:''
+                }
             }
         },
         methods: {
@@ -144,6 +176,33 @@
                 });
 
             },
+            // 优秀状态操作
+            handleState(index,row){
+                if(row.excellent == 0){
+                    row.excellent = 1
+                }else{
+                    row.excellent = 0
+                }
+                console.log(row)
+                let obj = {
+                    p_id:row.p_id,
+                    sid:row.sid,
+                    title_id:row.title_id,
+                    file_id:row.file_id,
+                    create_date:row.create_date,
+                    excellent:row.excellent,
+                };
+                service.update(obj).then(data => {
+                    if(data.data.success){
+                        this.$message({
+                            showClose: true,
+                            message: '状态修改成功',
+                            type: 'success'
+                        });
+                        this.getData();
+                    }
+                })
+            },
             getData(){
                 let obj = {};
                 for(var i in this.formInline){
@@ -151,6 +210,7 @@
                 }
                 obj.pageNum = this.currentPage;
                 obj.pageSize = this.pageSize;
+                console.log(obj)
                 service.paperList(obj).then(data => {
                     if(data.data.success){
                         this.tableData = data.data.data.items;
@@ -165,9 +225,9 @@
         filters: {
             capitalize: function (value) {
                if(value == 0){
-                    return "不优秀"
+                    return "否"
                }else{
-                   return "优秀"
+                   return "是"
                }
                 
             }

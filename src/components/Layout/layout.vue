@@ -7,11 +7,11 @@
                     <h1>高校毕设系统后台管理</h1>
                 </div>
                 <div class="user">
-                    <el-dropdown trigger="click">
+                    <el-dropdown trigger="click" >
                         <span class="el-dropdown-link"><i class="iconfont icon-yonghu"></i>{{username}}</span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>修改密码</el-dropdown-item>
-                            <el-dropdown-item>退出登录</el-dropdown-item>
+                            <el-dropdown-item @click.native="updatePassword">修改密码</el-dropdown-item>
+                            <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -29,26 +29,76 @@
                                 <span>{{item.label}}</span>
                             </template>
                             <el-menu-item-group>
-                               <el-menu-item v-for="(chilitem,index1) in item.children" :index="chilitem.name" :key="index1">{{chilitem.label}}</el-menu-item>
+                               <el-menu-item @click="menuClick" v-for="(chilitem,index1) in item.children" :index="chilitem.name" :key="index1">{{chilitem.label}}</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
                 <el-main>
-                    <router-view></router-view>
+                    <div class="message" v-if="show">
+                            <h1>技术架构</h1>
+                            <ul>
+                                <li v-for="item in messageList">{{item.text}}</li>
+                            </ul>
+                        </div>
+                    <router-view>
+                        
+                    </router-view>
                 </el-main>
             </el-container>
         </el-container>
+        <el-dialog title="修改密码" :visible.sync="dialogFormVisible" width="25%" >
+                <el-form :model="form" :rules="rules" ref="ruleForm" class="demo-form-inline" style="width:80%" >
+                    <el-form-item label="新密码" :label-width="formLabelWidth" prop="password">
+                        <el-input class="formBtn" size="medium" v-model="form.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码" :label-width="formLabelWidth" prop="newPassword">
+                        <el-input class="formBtn" size="medium" v-model="form.newPassword" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="save" >确 定</el-button>
+                </div>
+            </el-dialog>
     </div>
 </template>
 
 <script>
+import service from './service'
     export default {
         name: "ddd",
         data() {
             return {
+                formLabelWidth: '95px',
                 index:null,
+                show:false,
                 username:'',
+                dialogFormVisible:false,
+                messageList:[
+                    {text:'1.框架：springboot'},
+                    {text:'2.安全框架：shrio'},
+                    {text:'3.持久层框架：mybatis'},
+                    {text:'4.数据库：mysql'},
+                    {text:'5.项目管理工具：Maven'},
+                    {text:'6.分页插件：pagehelper'},
+                    {text:'7.Jdk版本：jdk1.8.0_202'},
+                    {text:'8.编辑器：IDEA'},
+                    {text:'9.数据库管理工具：navicat'}
+                ],
+                form:{
+                    password:'',
+                    newPassword:''
+                },
+                rules:{
+                    password: [
+                            { required: true, message: '密码不能为空', trigger: ['blur','change'] }
+                        ],
+                        newPassword: [
+                            { required: true, message: '确认密码不能为空', trigger: ['blur','change'] }
+                        ]
+                },
+                userinfo:'',
                 menuList:[
                     {
                         label:'教师管理',
@@ -90,16 +140,74 @@
         },
         methods: {
             handleOpen(key, keyPath) {
-
+                
+            },
+            menuClick(){
+                this.show = false
             },
             handleClose(key, keyPath) {
 
             },
+            updatePassword(){
+                this.dialogFormVisible = true
+            },
+            logout(){
+                service.logout().then(data => {
+                    if(data.data.success){
+                        if(data.data.success){
+                            sessionStorage.clear()
+                            this.$router.push({
+                                path:'/'
+                            })
+                        }
+                    }
+                })
+            },
+            save(){
+                this.$refs['ruleForm'].validate((valid) => {
+                    if (valid) {
+                       if(this.form.password === this.form.newPassword){
+                            let obj= {
+                                id:JSON.parse(this.userinfo).id,
+                                password:this.form.newPassword
+                            }
+                            console.log(this.userinfo)
+                            service.update(obj).then(data => {
+                                if(data.data.success){
+                                    console.log(data.data)
+                                    if(data.data.success){
+                                        this.dialogFormVisible = false
+                                        sessionStorage.clear()
+                                        this.$router.push({
+                                            path:'/'
+                                        })
+                                    }
+                                   
+                                }
+                            })
+                        }else{
+                            this.$message({
+                                message: '两次密码输入不一致',
+                                type: 'warning'
+                            });
+                        }
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+                
+            }
+             
         },
         mounted() {
-            var userinfo = sessionStorage.getItem("userInfo");
-            if(userinfo){
-                this.username = JSON.parse(userinfo).username;
+            console.log(this.$route)
+            if(this.$route.params.isShow){
+                this.show = true;
+            }
+            this.userinfo = sessionStorage.getItem("userInfo");
+            if(this.userinfo){
+                this.username = JSON.parse(this.userinfo).realname;
             }
         }
     }
@@ -198,7 +306,24 @@
         color: #333;
         margin-left: 202px;
     }
+    .message{
+        text-align: left;
+        width: 260px;
+        height: 380px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%)
 
+    }
+    .message li{
+        font-size: 20px;
+        margin: 10px 0;
+        list-style: none;
+    }
+    .message h1{
+        font-size: 35px;
+    }
     body > .el-container {
         margin-bottom: 40px;
         position: absolute;

@@ -43,7 +43,10 @@
                             sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
                             this.$router.push({
                                 name: 'Layout',
-                                path: '/layout'
+                                // path: '/layout',
+                                params:{
+                                    isShow:true
+                                }
                             })
                         } else {
                             this.$message({
