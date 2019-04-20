@@ -31,8 +31,11 @@
                         label="公告上传时间">
                 </el-table-column>
                 <el-table-column
-                        prop="file.originalfilename"
+                        prop=""
                         label="附件名称">
+                        <template slot-scope="scope">
+                            <a v-if="scope.row.file" :href="'http://39.105.144.217:8089/bishe/file/downloadFile?fileName=' +encodeURIComponent(scope.row.file.originalfilename)">{{scope.row.file.originalfilename}}</a>
+                        </template>
                 </el-table-column>
                 <el-table-column
                         prop=""
