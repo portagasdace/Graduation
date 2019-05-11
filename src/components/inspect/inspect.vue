@@ -25,7 +25,7 @@
                         prop=""
                         label="文件名">
                         <template slot-scope="scope"> 
-                            <a :href="'http://39.105.144.217:8089/bishe/file/downloadFile?fileName=' +encodeURIComponent(scope.row.file.originalfilename)">{{scope.row.file.originalfilename}}</a>
+                            <a v-if="scope.row.file" :href="'http://39.105.144.217:8089/bishe/file/downloadFile?fileName=' +encodeURIComponent(scope.row.file.originalfilename)">{{scope.row.file.originalfilename}}</a>
                         </template>
                 </el-table-column>
                 <el-table-column
