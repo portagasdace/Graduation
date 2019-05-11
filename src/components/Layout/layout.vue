@@ -121,6 +121,7 @@ import service from './service'
                         children:[
                             {label:'选题管理',name:'/selctionManage'},
                             {label:'开题报告',name:'/thesisProposal'},
+                            {label:'进度安排',name:'/progress'},
                             {label:'中期检查信息',name:'/inspect'},
                             {label:'论文信息管理',name:'/dissertation'},
                             {label:'公告信息管理',name:'/proclamation'},

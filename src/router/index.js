@@ -7,6 +7,7 @@ import personalInfoStu from '@/components/personalInfoStu/personalInfoStu' // �
 import personalInfo from '@/components/personalInfo/personalInfo' // 教室管理个人信息
 import selctionManage from '@/components/selctionManage/selctionManage' // 选题管理
 import thesisProposal from '@/components/thesisProposal/thesisProposal' // 开题报告
+import progress from '@/components/progress/progress' // 进度安排
 import inspect from '@/components/inspect/inspect' // 中期检查信息
 import dissertation from '@/components/dissertation/dissertation' // 论文信息管理
 import proclamation from '@/components/proclamation/proclamation' // 公告信息管理
@@ -72,6 +73,11 @@ export default new Router({
                     path: '/roleManage',
                     name: 'roleManage',
                     component: roleManage
+                },
+                {
+                    path: '/progress',
+                    name: 'progress',
+                    component: progress
                 },
                 {
                     path: '/powerManage',
