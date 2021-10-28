@@ -9,8 +9,8 @@
                         </el-form-item>
                     </el-col>
                     <!--<el-col :span="8">-->
-                        <!--<el-form-item label="教师姓名">-->
-                            <!--<el-input size="medium" v-model="formInline.tname" placeholder="教师姓名"></el-input>-->
+                        <!--<el-form-item label="姓名">-->
+                            <!--<el-input size="medium" v-model="formInline.tname" placeholder="姓名"></el-input>-->
                         <!--</el-form-item>-->
                     <!--</el-col>-->
                     <el-col :span="8">
@@ -89,7 +89,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <!--<el-form-item label="教师姓名" :label-width="formLabelWidth">-->
+                    <!--<el-form-item label="姓名" :label-width="formLabelWidth">-->
                     <!--<el-input class="formBtn" disabled size="medium" v-model="form.teacherName" autocomplete="off"></el-input>-->
                     <!--</el-form-item>-->
                     <!--<el-row class="text">-->

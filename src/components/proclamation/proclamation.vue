@@ -63,7 +63,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <!--<el-form-item label="教师姓名" :label-width="formLabelWidth">-->
+                    <!--<el-form-item label="姓名" :label-width="formLabelWidth">-->
                     <!--<el-input class="formBtn" disabled size="medium" v-model="form.teacherName" autocomplete="off"></el-input>-->
                     <!--</el-form-item>-->
                     <el-row class="text">

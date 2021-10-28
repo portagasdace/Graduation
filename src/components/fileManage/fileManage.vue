@@ -4,17 +4,17 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-row :gutter="20">
                     <el-col :span="8">
-                        <el-form-item label="文件名称">
-                            <el-input size="medium" v-model="formInline.originalfilename" placeholder="文件名称"></el-input>
+                        <el-form-item label="1111">
+                            <el-input size="medium" v-model="formInline.originalfilename" placeholder="1111"></el-input>
                         </el-form-item>
                     </el-col>
                     <!--<el-col :span="8">-->
-                    <!--<el-form-item label="教师姓名">-->
-                    <!--<el-input size="medium" v-model="formInline.tname" placeholder="教师姓名"></el-input>-->
+                    <!--<el-form-item label="姓名">-->
+                    <!--<el-input size="medium" v-model="formInline.tname" placeholder="姓名"></el-input>-->
                     <!--</el-form-item>-->
                     <!--</el-col>-->
                     <el-col :span="8">
-                        <el-button class="serch" size="medium" type="primary" style="float: right" @click="onSubmit">查询</el-button>
+                        <el-button class="serch" size="medium" type="primary" style="float: right" @click="onSubmit">1111</el-button>
                     </el-col>
                 </el-row>
             </el-form>
@@ -75,7 +75,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <!--<el-form-item label="教师姓名" :label-width="formLabelWidth">-->
+                    <!--<el-form-item label="姓名" :label-width="formLabelWidth">-->
                     <!--<el-input class="formBtn" disabled size="medium" v-model="form.teacherName" autocomplete="off"></el-input>-->
                     <!--</el-form-item>-->
                     <!--<el-row class="text">-->

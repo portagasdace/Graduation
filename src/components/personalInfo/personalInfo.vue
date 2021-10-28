@@ -9,8 +9,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="7">
-                        <el-form-item label="教师姓名">
-                            <el-input size="medium" v-model="formInline.tname" placeholder="教师姓名"></el-input>
+                        <el-form-item label="姓名">
+                            <el-input size="medium" v-model="formInline.tname" placeholder="姓名"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="7">
@@ -42,7 +42,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="tname"
-                        label="教师姓名">
+                        label="姓名">
                 </el-table-column>
                 <el-table-column
                         prop="collage"
@@ -95,7 +95,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="教师姓名" :label-width="formLabelWidth">
+                    <el-form-item label="姓名" :label-width="formLabelWidth">
                         <el-input class="formBtn" size="medium" v-model="form.tname" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="学院" :label-width="formLabelWidth">

@@ -14,6 +14,8 @@ import proclamation from '@/components/proclamation/proclamation' // 公告信�
 import roleManage from '@/components/roleManage/roleManage' // 角色管理
 import powerManage from '@/components/powerManage/powerManage' // 权限管理
 import fileManage from '@/components/fileManage/fileManage' // 文件管理
+import demo from '@/components/demo/index' // 文件管理
+
 Vue.use(Router)
 
 export default new Router({
@@ -32,7 +34,12 @@ export default new Router({
                 {
                     path: '/projectManage',
                     name: 'projectManage',
-                    component: projectManage
+                    component: demo
+                },
+                {
+                    path: '/demo',
+                    name: 'demo',
+                    component: demo
                 },
                 {
                     path: '/personalInfoStu',
